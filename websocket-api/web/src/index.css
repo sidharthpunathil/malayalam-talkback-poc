@@ -1,0 +1,65 @@
+:root {
+  --bg: #f6f4ef;
+  --card: #ffffff;
+  --ink: #1d1b16;
+  --muted: #6b665c;
+  --accent: #0f7b5f;
+  --accent-soft: #e2f2ec;
+  --user: #eef1f7;
+  --danger: #c0392b;
+  --border: #e4e0d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14130f; --card: #1e1c17; --ink: #f1ede4; --muted: #a39d90;
+    --accent: #3fbf95; --accent-soft: #1d3a30; --user: #23262e; --border: #2e2b24;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "Noto Sans Malayalam", Inter, system-ui, sans-serif; line-height: 1.6;
+}
+main { max-width: 720px; margin: 0 auto; padding: 32px 16px; display: flex; flex-direction: column; gap: 20px; min-height: 100vh; }
+h1 { margin: 0; font-size: 1.8rem; }
+.sub { margin: 4px 0 0; color: var(--muted); font-family: Inter, sans-serif; font-size: .9rem; }
+code { font-size: .85em; }
+.warn { background: #fff3cd; color: #6b4e00; padding: 10px 14px; border-radius: 10px; }
+
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
+label { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: .9rem; }
+select, input, button { font: inherit; color: var(--ink); }
+select, input { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; }
+
+#talk {
+  display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px;
+  border: 0; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 600; cursor: pointer;
+  transition: transform .15s ease, background .2s ease;
+}
+#talk:active { transform: scale(.97); }
+#talk:disabled { opacity: .5; cursor: default; }
+#talk.live { background: var(--danger); }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; opacity: .8; }
+#talk.live .dot { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.6); opacity: .3; } }
+
+#status { margin: 0; flex-basis: 100%; color: var(--muted); font-size: .95rem; }
+body[data-state="error"] #status { color: var(--danger); }
+body[data-state="speaking"] #status { color: var(--accent); }
+
+#transcript {
+  flex: 1; min-height: 280px; max-height: 55vh; overflow-y: auto;
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+#transcript:empty::before { content: "സംഭാഷണം ഇവിടെ കാണാം…"; color: var(--muted); }
+.msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; }
+.msg p { margin: 0; white-space: pre-wrap; }
+.msg .who { display: block; font-size: .75rem; color: var(--muted); font-family: Inter, sans-serif; }
+.msg.user { align-self: flex-end; background: var(--user); }
+.msg.gemini { align-self: flex-start; background: var(--accent-soft); }
+
+#text-form { display: flex; gap: 8px; }
+#text-form input { flex: 1; min-width: 0; }
+#text-form button { border: 1px solid var(--border); background: var(--card); border-radius: 10px; padding: 8px 16px; cursor: pointer; }
+#root { display: contents; }

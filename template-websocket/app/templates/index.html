@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Malayalam Talkback</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>മലയാളം Talkback</h1>
+      <p class="sub">Gemini Live · <code>{{ model }}</code></p>
+    </header>
+
+    {% if not has_key %}
+    <p class="warn">No Gemini API key configured. Copy <code>.env.example</code> to <code>.env</code> and set <code>GEMINI_API_KEYS</code>.</p>
+    {% endif %}
+
+    <section class="controls">
+      <label>ശബ്ദം · Voice
+        <select id="voice">
+          {% for v in voices %}
+          <option value="{{ v }}" {% if v == default_voice %}selected{% endif %}>{{ v }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button id="talk" type="button" {% if not has_key %}disabled{% endif %}>
+        <span class="dot"></span><span class="label">സംസാരിക്കാൻ തുടങ്ങുക · Start</span>
+      </button>
+      <p id="status" role="status">തയ്യാറാണ് · Ready</p>
+    </section>
+
+    <section id="transcript" aria-live="polite"></section>
+
+    <form id="text-form">
+      <input id="text-input" type="text" placeholder="അല്ലെങ്കിൽ ഇവിടെ ടൈപ്പ് ചെയ്യൂ…" autocomplete="off" disabled>
+      <button type="submit">അയയ്ക്കുക</button>
+    </form>
+  </main>
+  <script src="{{ url_for('static', path='app.js') }}"></script>
+</body>
+</html>
